@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: DEV-1
+      author: devmarkru1
+      changes:
+        - createTable:
+            tableName: tariff
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    unique: true
+                    primaryKey: true
+                    primaryKeyName: tariff_pk
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: interestRate
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
