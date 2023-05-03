@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_user
+      author: maxvol
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    unique: true
+                    primaryKey: true
+                    primaryKeyName: role_pk
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+              - column:
+                  name: firstname
+                  type: varchar(255)
+              - column:
+                  name: lastname
+                  type: varchar(255)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: password
+                  type: varchar(255)
+              - column:
+                  name: locked
+                  type: boolean
+              - column:
+                  name: enabled
+                  type: boolean

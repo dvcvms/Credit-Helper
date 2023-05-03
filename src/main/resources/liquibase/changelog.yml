@@ -5,3 +5,15 @@ databaseChangeLog:
   - include:
       relativeToChangelogFile: true
       file: changeSet/loanOrder.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/user.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/role.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/user-role.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/confirmationToken.yml

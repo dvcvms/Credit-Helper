@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_user
+      author: maxvol
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    unique: true
+                    primaryKey: true
+                    primaryKeyName: role_pk
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
