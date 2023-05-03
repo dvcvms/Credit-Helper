@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_token
+      author: maxvol
+      changes:
+        - createTable:
+            tableName: confirmation_token
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    unique: true
+                    primaryKey: true
+                    primaryKeyName: confirmation_token_pk
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(255)
+              - column:
+                  name: createdAt
+                  type: timestamp
+              - column:
+                  name: expiresAt
+                  type: timestamp
+              - column:
+                  name: confirmedAt
+                  type: timestamp
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user
+                    references: users(id)
