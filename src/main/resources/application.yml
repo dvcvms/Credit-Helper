@@ -10,3 +10,8 @@ spring:
 
   liquibase:
     change-log: classpath:liquibase/changelog.yml
+
+  scheduler:
+    initDelay: 120000
+    fixedRate: 120000
+    poolSize: 5

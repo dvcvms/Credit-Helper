@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mts.credit_registration.entity.LoanOrderEntity;
 import ru.mts.credit_registration.serivce.LoanOrderService;
@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @EnableAsync
 public class ScheduledJobsService {
@@ -23,7 +23,10 @@ public class ScheduledJobsService {
     private final LoanOrderService orderService;
 
     @Async
-    @Scheduled(initialDelay = 1000 * 5, fixedRate = 1000 * 3) // TODO: do param`s in properties file
+    @Scheduled(
+            initialDelayString = "${spring.scheduler.initDelay}",
+            fixedRateString = "${spring.scheduler.fixedRate}"
+    )
     @Transactional
     public void considerationApplicationJob() {
         List<LoanOrderEntity> inProgress = orderService.getByStatus("IN_PROGRESS");
