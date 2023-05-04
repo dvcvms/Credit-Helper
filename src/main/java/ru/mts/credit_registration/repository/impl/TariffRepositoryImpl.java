@@ -15,9 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TariffRepositoryImpl implements TariffRepository {
 
-    private static final String SQL_SELECT_ALL = "SELECT * FROM tariff";
-    private static final String SQL_EXISTS_BY_ID = "SELECT EXISTS (SELECT * FROM tariff WHERE id = ?)";
     private final JdbcTemplate jdbcTemplate;
+
+    private static final String SQL_SELECT_ALL = "SELECT * FROM tariff";
+
+    private static final String SQL_EXISTS_BY_ID = "SELECT EXISTS (SELECT * FROM tariff WHERE id = ?)";
 
     @Override
     public Optional<List<TariffEntity>> findAll() {
