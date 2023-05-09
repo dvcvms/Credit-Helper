@@ -54,7 +54,7 @@ your experience with us as secure and convenient as possible.
 ### Clone the repository:
 
 ```
-  https://gitlab.com/dvcvms/credit-registration.git
+  git clone https://gitlab.com/dvcvms/credit-registration.git
 ```
 
 ### Navigate to the project directory:
@@ -182,14 +182,6 @@ password - [link](https://support.google.com/mail/answer/185833?hl=en-GB).
 #### Order added into database:
 
 ![img_13.png](assets/img_13.png)
-
-## Running Tests
-
-To run tests, run the following command
-
-```
-  maven clean test
-```
 
 ## Feedback
 

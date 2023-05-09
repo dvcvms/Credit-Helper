@@ -17,7 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @TestPropertySource(properties = {
-        "spring.sql.init.data-locations=classpath:data-order-tariff-test.sql"
+        "spring.sql.init.data-locations=classpath:data-test.sql"
 })
 @ContextConfiguration(classes = {
         PersistenceLayerTestConfig.class,
@@ -32,7 +32,7 @@ public class TariffRepositoryImplTest {
 
     @Test
     public void findAll() {
-        List<TariffEntity> actualTariffs = tariffRepository.findAll().get();
+        List<TariffEntity> actualTariffs = tariffRepository.findAll();
 
         assertThat(actualTariffs.size()).isEqualTo(3);
     }
@@ -41,7 +41,7 @@ public class TariffRepositoryImplTest {
     public void willReturnTrueWhenExistById() {
         Long tariffId = 1L;
 
-        Boolean isExists = tariffRepository.existsById(tariffId).get();
+        boolean isExists = tariffRepository.existsById(tariffId);
 
         assertThat(isExists).isTrue();
     }
@@ -50,7 +50,7 @@ public class TariffRepositoryImplTest {
     public void willReturnFalseWhenExistById() {
         Long falseId = -1L;
 
-        Boolean isExists = tariffRepository.existsById(falseId).get();
+        boolean isExists = tariffRepository.existsById(falseId);
 
         Assertions.assertThat(isExists).isFalse();
     }

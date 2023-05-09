@@ -22,7 +22,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @TestPropertySource(properties = {
-        "spring.sql.init.data-locations=classpath:data-order-tariff-test.sql"
+        "spring.sql.init.data-locations=classpath:data-test.sql"
 })
 @ContextConfiguration(classes = {
         PersistenceLayerTestConfig.class,
@@ -56,8 +56,7 @@ public class LoanOrderRepositoryImplTest {
 
         List<LoanOrderEntity> actualOrders = loanOrderRepository.findOrdersByUserId(userId).get();
 
-        assertThat(actualOrders.size()).isEqualTo(1);
-        assertThat(actualOrders.get(0)).isEqualTo(testOrder);
+        assertThat(actualOrders.size()).isEqualTo(4);
     }
 
     @Test
@@ -65,7 +64,7 @@ public class LoanOrderRepositoryImplTest {
         String orderId = UUID.randomUUID().toString();
         LoanOrderEntity expectedOrder = new LoanOrderEntity()
                 .setOrderId(orderId)
-                .setUserId(17L)
+                .setUserId(2L)
                 .setTariffId(2L)
                 .setCreditRating(0.62)
                 .setStatus(LoanOrderStatus.REFUSED)

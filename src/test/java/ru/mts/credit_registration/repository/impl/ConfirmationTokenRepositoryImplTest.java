@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @TestPropertySource(properties = {
-        "spring.sql.init.data-locations=classpath:data-user-role-token-test.sql"
+        "spring.sql.init.data-locations=classpath:data-test.sql"
 })
 @ContextConfiguration(classes = {
         PersistenceLayerTestConfig.class,

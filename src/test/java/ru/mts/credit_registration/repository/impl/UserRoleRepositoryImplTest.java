@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @TestPropertySource(properties = {
-        "spring.sql.init.data-locations=classpath:data-user-role-token-test.sql"
+        "spring.sql.init.data-locations=classpath:data-test.sql"
 })
 @ContextConfiguration(classes = {
         PersistenceLayerTestConfig.class,
@@ -35,7 +35,7 @@ public class UserRoleRepositoryImplTest {
         List<Long> rolesIdByUserId =
                 userRoleRepository.findRolesIdByUserId(userId);
 
-        assertThat(rolesIdByUserId.size()).isEqualTo(2);
+        assertThat(rolesIdByUserId.size()).isEqualTo(1);
     }
 
     @Test
@@ -47,6 +47,6 @@ public class UserRoleRepositoryImplTest {
         List<Long> actualRoles =
                 userRoleRepository.findRolesIdByUserId(userId);
 
-        assertThat(actualRoles.size()).isEqualTo(3);
+        assertThat(actualRoles.size()).isEqualTo(2);
     }
 }

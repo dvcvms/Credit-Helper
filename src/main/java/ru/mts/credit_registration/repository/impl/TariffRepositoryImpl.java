@@ -8,7 +8,6 @@ import ru.mts.credit_registration.entity.TariffEntity;
 import ru.mts.credit_registration.repository.TariffRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,11 +20,10 @@ public class TariffRepositoryImpl implements TariffRepository {
     private static final String SQL_EXISTS_BY_ID = "SELECT EXISTS (SELECT * FROM tariff WHERE id = ?)";
 
     @Override
-    public Optional<List<TariffEntity>> findAll() {
-        return Optional.of(jdbcTemplate.query(
-                        SQL_SELECT_ALL,
-                        new BeanPropertyRowMapper<>(TariffEntity.class)
-                )
+    public List<TariffEntity> findAll() {
+        return jdbcTemplate.query(
+                SQL_SELECT_ALL,
+                new BeanPropertyRowMapper<>(TariffEntity.class)
         );
     }
 

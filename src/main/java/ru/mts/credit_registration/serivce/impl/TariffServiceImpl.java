@@ -16,7 +16,7 @@ public class TariffServiceImpl implements TariffService {
     public DataResponse<DataTariffsResponse> getTariffs() {
         return new DataResponse<>(
                 new DataTariffsResponse(
-                        tariffRepository.findAll().orElseThrow()
+                        tariffRepository.findAll()
                 )
         );
     }
