@@ -143,45 +143,45 @@ password - [link](https://support.google.com/mail/answer/185833?hl=en-GB).
 
 #### Registration:
 
-![img.png](img.png)
+![img.png](assets/img.png)
 
 #### Your registration request is accepted into database but not enabled:
 
-![img_2.png](img_2.png)
+![img_2.png](assets/img_2.png)
 
 #### For your email sent verification link. Click on the link and you will be activated:
 
-![img_3.png](img_3.png)
+![img_3.png](assets/img_3.png)
 
 #### Email was confirmed successfully:
 
-![img_4.png](img_4.png)
+![img_4.png](assets/img_4.png)
 
 #### If you click again you will see:
 
-![img_7.png](img_7.png)
+![img_7.png](assets/img_7.png)
 
 #### After that you became activated in the database:
 
-![img_6.png](img_6.png)
+![img_6.png](assets/img_6.png)
 
 #### Auth and get token:
 
-![img_12.png](img_12.png)
+![img_12.png](assets/img_12.png)
 
 ### Now you can use service
 
 #### Set this token into Bearer Token for your requests:
 
-![img_11.png](img_11.png)
+![img_11.png](assets/img_11.png)
 
 #### Creating order:
 
-![img_10.png](img_10.png)
+![img_10.png](assets/img_10.png)
 
 #### Order added into database:
 
-![img_13.png](img_13.png)
+![img_13.png](assets/img_13.png)
 
 ## Running Tests
 
