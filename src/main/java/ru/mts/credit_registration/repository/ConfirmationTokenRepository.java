@@ -9,7 +9,7 @@ public interface ConfirmationTokenRepository {
 
     Optional<ConfirmationTokenEntity> findByToken(String token);
 
-    int updateConfirmedAt(String token, LocalDateTime confirmedAt);
+    void updateConfirmedAt(String token, LocalDateTime confirmedAt);
 
     ConfirmationTokenEntity save(ConfirmationTokenEntity token);
 

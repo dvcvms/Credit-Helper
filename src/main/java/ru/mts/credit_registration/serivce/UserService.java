@@ -25,7 +25,7 @@ public interface UserService {
 
     boolean existsByUsername(String username);
 
-    int enableUser(Long userId);
+    void enableUser(Long userId);
 
     UserEntity addRole(Long userId, RoleEntity role);
 

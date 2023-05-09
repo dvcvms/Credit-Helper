@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetailsImpl(userIntoDatabase);
     }
 
-    public int enableUser(Long userId) {
-        return userService.enableUser(userId);
+    public void enableUser(Long userId) {
+        userService.enableUser(userId);
     }
 }

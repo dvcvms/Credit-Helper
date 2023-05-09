@@ -9,6 +9,8 @@ import ru.mts.credit_registration.model.*;
 import ru.mts.credit_registration.repository.LoanOrderRepository;
 import ru.mts.credit_registration.serivce.LoanOrderService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
@@ -112,6 +114,9 @@ public class LoanOrderServiceImpl implements LoanOrderService {
 
     private double generateRandomRating() {
         Random random = new Random();
-        return 0.1 + random.nextDouble() * 0.8;
+        double randomValue = 0.1 + random.nextDouble() * 0.8;
+        BigDecimal bd = new BigDecimal(randomValue);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

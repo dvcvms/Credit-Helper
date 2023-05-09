@@ -1,7 +1,6 @@
 package ru.mts.credit_registration.repository.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -31,16 +30,11 @@ public class TariffRepositoryImpl implements TariffRepository {
     }
 
     @Override
-    public Optional<Boolean> existsById(Long tariffId) {
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(
-                            SQL_EXISTS_BY_ID,
-                            Boolean.class,
-                            tariffId
-                    )
-            );
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+    public boolean existsById(Long tariffId) {
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                SQL_EXISTS_BY_ID,
+                Boolean.class,
+                tariffId
+        ));
     }
 }

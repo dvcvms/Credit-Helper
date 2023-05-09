@@ -44,34 +44,34 @@ public class ConfirmationTokenRepositoryImpl implements ConfirmationTokenReposit
     }
 
     @Override
-    public int updateConfirmedAt(String token, LocalDateTime confirmedAt) {
-        return jdbcTemplate.update(SQL_UPDATE_CONFIRMED, confirmedAt, token);
+    public void updateConfirmedAt(String token, LocalDateTime confirmedAt) {
+        jdbcTemplate.update(
+                SQL_UPDATE_CONFIRMED,
+                confirmedAt, token
+        );
     }
 
     @Override
     public ConfirmationTokenEntity save(ConfirmationTokenEntity token) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(
-                connection -> {
-                    PreparedStatement ps =
-                            connection.prepareStatement(SQL_SAVE_CONFIRMATION_TOKEN,
-                                    Statement.RETURN_GENERATED_KEYS
-                            );
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps =
+                    connection.prepareStatement(SQL_SAVE_CONFIRMATION_TOKEN,
+                            Statement.RETURN_GENERATED_KEYS
+                    );
 
-                    ps.setString(1, token.getToken());
-                    ps.setTimestamp(2, Timestamp.valueOf(token.getCreatedAt()));
-                    ps.setTimestamp(3, Timestamp.valueOf(token.getExpiresAt()));
+            ps.setString(1, token.getToken());
+            ps.setTimestamp(2, Timestamp.valueOf(token.getCreatedAt()));
+            ps.setTimestamp(3, Timestamp.valueOf(token.getExpiresAt()));
 
-                    LocalDateTime confirmedAt = token.getConfirmedAt();
-                    ps.setTimestamp(4, confirmedAt == null ? null : Timestamp.valueOf(confirmedAt));
+            LocalDateTime confirmedAt = token.getConfirmedAt();
+            ps.setTimestamp(4, confirmedAt == null ? null : Timestamp.valueOf(confirmedAt));
 
-                    ps.setLong(5, token.getUserId());
+            ps.setLong(5, token.getUserId());
 
-                    return ps;
-                },
-                keyHolder
-        );
+            return ps;
+        }, keyHolder);
 
         token.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
         return token;

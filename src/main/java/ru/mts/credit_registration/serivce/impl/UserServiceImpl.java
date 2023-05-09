@@ -86,8 +86,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int enableUser(Long userId) {
-        return userRepository.enableUser(userId);
+    public void enableUser(Long userId) {
+        userRepository.enableUser(userId);
     }
 
     @Override

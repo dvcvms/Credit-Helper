@@ -21,7 +21,7 @@ public class TariffServiceImpl implements TariffService {
         );
     }
 
-    public Boolean existsById(Long tariffId) {
-        return tariffRepository.existsById(tariffId).orElseThrow();
+    public boolean existsById(Long tariffId) {
+        return tariffRepository.existsById(tariffId);
     }
 }

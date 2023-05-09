@@ -190,8 +190,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int enableUser(Long userId) {
-        return jdbcTemplate.update(SQL_UPDATE_ENABLED,
+    public void enableUser(Long userId) {
+        jdbcTemplate.update(
+                SQL_UPDATE_ENABLED,
                 userId
         );
     }

@@ -27,7 +27,7 @@ public interface UserRepository {
 
     boolean existsByEmail(String email);
 
-    int enableUser(Long userId);
+    void enableUser(Long userId);
 
     void addRoles(Long userId, Set<RoleEntity> roles);
 }

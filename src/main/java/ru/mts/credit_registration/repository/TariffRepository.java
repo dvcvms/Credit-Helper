@@ -9,6 +9,6 @@ public interface TariffRepository {
 
     Optional<List<TariffEntity>> findAll();
 
-    Optional<Boolean> existsById(Long tariffId);
+    boolean existsById(Long tariffId);
 
 }

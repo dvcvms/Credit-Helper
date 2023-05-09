@@ -7,6 +7,6 @@ public interface TariffService {
 
     DataResponse<DataTariffsResponse> getTariffs();
 
-    Boolean existsById(Long tariffId);
+    boolean existsById(Long tariffId);
 
 }
