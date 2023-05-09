@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_table_user
+      id: create_table_roles
       author: maxvol
       changes:
         - createTable:
@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     primaryKey: true
-                    primaryKeyName: role_pk
+                    primaryKeyName: pk_roles
                     nullable: false
               - column:
                   name: name

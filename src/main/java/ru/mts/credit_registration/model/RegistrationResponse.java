@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegistrationResponse {
     private String token;
-    private String username;
 }

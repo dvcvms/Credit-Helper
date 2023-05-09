@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("USER_NOT_FOUND",
+                .orElseThrow(() -> new UserNotFoundException(
+                                "USER_NOT_FOUND",
                                 String.format("Пользователь с id=`%d` не найден", id)
                         )
                 );
@@ -30,7 +31,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("USER_NOT_FOUND_BY_USERNAME",
+                .orElseThrow(() -> new UserNotFoundException(
+                                "USER_NOT_FOUND_BY_USERNAME",
                                 String.format("Пользователь с ником - `%s` не найден", username)
                         )
                 );
@@ -39,7 +41,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("USER_NOT_FOUND_BY_EMAIL",
+                .orElseThrow(() -> new UserNotFoundException(
+                                "USER_NOT_FOUND_BY_EMAIL",
                                 String.format("Пользователь с почтой `%s` не найден", email)
                         )
                 );
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll().orElseThrow(); // TODO: repo check
+        return userRepository.findAll();
     }
 
     @Override
@@ -56,21 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity updateUser(UserEntity user) {
-        UserEntity userEntity = userRepository.findByEmail(user.getEmail()).orElseThrow();
-
-        userEntity.setUsername(user.getUsername());
-        userEntity.setFirstname(user.getFirstname());
-        userEntity.setLastname(user.getLastname());
-        userEntity.setEmail(user.getEmail());
-
-        return userRepository.save(userEntity); // TODO: update method create
-    }
-
-    @Override
+    @Transactional
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("USER_NOT_FOUND",
+            throw new UserNotFoundException(
+                    "USER_NOT_FOUND",
                     String.format("Пользователь с id=`%d` не найден", id)
             );
         }

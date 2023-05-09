@@ -12,7 +12,8 @@ public class ConfirmTokenValidator {
     public void validate(ConfirmationTokenEntity confirmationToken) {
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new ConfirmationTokenNotValidException("EMAIL_ALREADY_CONFIRMED",
+            throw new ConfirmationTokenNotValidException(
+                    "EMAIL_ALREADY_CONFIRMED",
                     "Электронная почта уже подтверждена"
             );
         }
@@ -20,7 +21,8 @@ public class ConfirmTokenValidator {
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new ConfirmationTokenNotValidException("TOKEN_EXPIRED",
+            throw new ConfirmationTokenNotValidException(
+                    "TOKEN_EXPIRED",
                     "Срок действия токена истёк"
             );
         }

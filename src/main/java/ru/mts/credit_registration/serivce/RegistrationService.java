@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.mts.credit_registration.entity.ConfirmationTokenEntity;
 import ru.mts.credit_registration.entity.RoleEntity;
 import ru.mts.credit_registration.entity.UserEntity;
+import ru.mts.credit_registration.enums.RoleName;
+import ru.mts.credit_registration.exception.ConfirmationTokenNotValidException;
 import ru.mts.credit_registration.model.*;
 import ru.mts.credit_registration.property.ServerProperties;
 import ru.mts.credit_registration.security.UserDetailsImpl;
@@ -45,7 +47,7 @@ public class RegistrationService {
         userValidator.validate(user);
 
         UserEntity createdUser = userService.createUser(user);
-        RoleEntity role = roleService.findByName("ROLE_USER");
+        RoleEntity role = roleService.findByName(RoleName.ROLE_USER);
         UserEntity updatedUser = userService.addRole(createdUser.getId(), role);
         String jwtToken = jwtService.generateToken(new UserDetailsImpl(updatedUser));
 
@@ -69,23 +71,33 @@ public class RegistrationService {
     }
 
     private String generateLink(String jwtToken) {
-        return String.format("http://%s:%s/registration/confirm?token=%s",
+        return String.format(
+                "http://%s:%s/registration/confirm?token=%s",
                 serverProperties.getHost(),
                 serverProperties.getPort(),
-                jwtToken);
+                jwtToken
+        );
     }
 
     @Transactional
     public DataResponse<ConfirmTokenResponse> confirmToken(String token) {
         ConfirmationTokenEntity confirmationToken =
                 confirmationTokenService.getToken(token)
-                        .orElseThrow(() -> new IllegalStateException("token not found")); // TODO:
+                        .orElseThrow(() -> new ConfirmationTokenNotValidException(
+                                        "TOKE_NOT_FOUND",
+                                        String.format("Токен `$s` не найден", token)
+                                )
+                        );
 
         confirmTokenValidator.validate(confirmationToken);
 
         confirmationTokenService.setConfirmedAt(token);
         userDetailsService.enableUser(confirmationToken.getUserId());
 
-        return new DataResponse<>(new ConfirmTokenResponse("Email was confirmed successfully!"));
+        return new DataResponse<>(
+                new ConfirmTokenResponse(
+                        "Email was confirmed successfully!"
+                )
+        );
     }
 }

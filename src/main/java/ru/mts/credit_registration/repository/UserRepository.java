@@ -15,7 +15,7 @@ public interface UserRepository {
 
     Optional<UserEntity> findByEmail(String email);
 
-    Optional<List<UserEntity>> findAll();
+    List<UserEntity> findAll();
 
     UserEntity save(UserEntity order);
 

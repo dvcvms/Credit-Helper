@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.mts.credit_registration.entity.RoleEntity;
 import ru.mts.credit_registration.entity.UserEntity;
 import ru.mts.credit_registration.exception.RoleNotFoundException;
@@ -49,11 +50,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<UserEntity> findById(Long id) {
         try {
-            UserEntity user = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID,
+            UserEntity user = jdbcTemplate.queryForObject(
+                    SQL_SELECT_BY_ID,
                     new BeanPropertyRowMapper<>(UserEntity.class),
                     id
             );
-
             return setRolesIntoUser(user);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -63,8 +64,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<UserEntity> findByUsername(String username) {
         try {
-            UserEntity user = jdbcTemplate.queryForObject(SQL_SELECT_BY_USERNAME, new BeanPropertyRowMapper<>(UserEntity.class), username);
-
+            UserEntity user = jdbcTemplate.queryForObject(
+                    SQL_SELECT_BY_USERNAME,
+                    new BeanPropertyRowMapper<>(UserEntity.class),
+                    username
+            );
             return setRolesIntoUser(user);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -74,8 +78,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<UserEntity> findByEmail(String email) {
         try {
-            UserEntity user = jdbcTemplate.queryForObject(SQL_SELECT_BY_EMAIL, new BeanPropertyRowMapper<>(UserEntity.class), email);
-
+            UserEntity user = jdbcTemplate.queryForObject(
+                    SQL_SELECT_BY_EMAIL,
+                    new BeanPropertyRowMapper<>(UserEntity.class),
+                    email
+            );
             return setRolesIntoUser(user);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -83,12 +90,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<List<UserEntity>> findAll() {
-        List<UserEntity> query = jdbcTemplate.query(SQL_SELECT_ALL,
+    @Transactional
+    public List<UserEntity> findAll() {
+        List<UserEntity> query = jdbcTemplate.query(
+                SQL_SELECT_ALL,
                 new BeanPropertyRowMapper<>(UserEntity.class)
         );
 
-        return Optional.of(query.stream().map(user -> setRolesIntoUser(user).get()).collect(Collectors.toList()));
+        return query.stream().map(user -> setRolesIntoUser(user).get()).collect(Collectors.toList());
     }
 
     private Optional<UserEntity> setRolesIntoUser(UserEntity userEntity) {
@@ -120,6 +129,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public UserEntity save(UserEntity user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -143,33 +153,55 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteById(Long id) {
-        userRoleRepository.deleteByUserId(id);
-
-        jdbcTemplate.update(SQL_DELETE_BY_ID, id);
+        jdbcTemplate.update(
+                SQL_DELETE_BY_ID,
+                id
+        );
     }
 
     @Override
     public boolean existsById(Long id) {
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(SQL_EXISTS_BY_ID, Boolean.class, id)); // TODO:
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                        SQL_EXISTS_BY_ID,
+                        Boolean.class,
+                        id
+                )
+        );
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(SQL_EXISTS_BY_USERNAME, Boolean.class, username));
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                        SQL_EXISTS_BY_USERNAME,
+                        Boolean.class,
+                        username
+                )
+        );
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(SQL_EXISTS_BY_EMAIL, Boolean.class, email));
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                        SQL_EXISTS_BY_EMAIL,
+                        Boolean.class,
+                        email
+                )
+        );
     }
 
     @Override
     public int enableUser(Long userId) {
-        return jdbcTemplate.update(SQL_UPDATE_ENABLED, userId);
+        return jdbcTemplate.update(SQL_UPDATE_ENABLED,
+                userId
+        );
     }
 
     @Override
+    @Transactional
     public void addRoles(Long userId, Set<RoleEntity> roles) {
-        userRoleRepository.addRole(userId, roles);
+        for (RoleEntity role : roles) {
+            Long roleId = roleRepository.findRoleIdByName(role.getName());
+            userRoleRepository.addRole(userId, roleId);
+        }
     }
 }

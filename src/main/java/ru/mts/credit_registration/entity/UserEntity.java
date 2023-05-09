@@ -26,5 +26,5 @@ public class UserEntity {
     private Boolean enabled = false;
 
     @Singular
-    private Set<RoleEntity> roles = new HashSet<>(); // TODO: enum
+    private Set<RoleEntity> roles = new HashSet<>();
 }

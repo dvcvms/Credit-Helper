@@ -14,7 +14,11 @@ public class TariffServiceImpl implements TariffService {
     private final TariffRepository tariffRepository;
 
     public DataResponse<DataTariffsResponse> getTariffs() {
-        return new DataResponse<>(new DataTariffsResponse(tariffRepository.findAll().orElseThrow()));
+        return new DataResponse<>(
+                new DataTariffsResponse(
+                        tariffRepository.findAll().orElseThrow()
+                )
+        );
     }
 
     public Boolean existsById(Long tariffId) {

@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.mts.credit_registration.entity.RoleEntity;
+import ru.mts.credit_registration.enums.RoleName;
 import ru.mts.credit_registration.repository.RoleRepository;
 
 import java.util.Optional;
@@ -20,11 +21,14 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     private static final String SQL_SELECT_BY_NAME = "SELECT * FROM roles WHERE name = ?";
 
+    private static final String SQL_SELECT_ROLE_ID_BY_NAME = "SELECT id FROM roles WHERE name = ?";
+
     @Override
     public Optional<RoleEntity> findById(Long id) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_SELECT_BY_ID,
-                    new BeanPropertyRowMapper<>(RoleEntity.class),
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                            SQL_SELECT_BY_ID,
+                            new BeanPropertyRowMapper<>(RoleEntity.class),
                             id
                     )
             );
@@ -34,15 +38,25 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Optional<RoleEntity> findByName(String name) {
+    public Optional<RoleEntity> findByName(RoleName name) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_SELECT_BY_NAME,
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                            SQL_SELECT_BY_NAME,
                             new BeanPropertyRowMapper<>(RoleEntity.class),
-                            name
+                            name.toString()
                     )
             );
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Long findRoleIdByName(RoleName name) {
+        return jdbcTemplate.queryForObject(
+                SQL_SELECT_ROLE_ID_BY_NAME,
+                Long.class,
+                name.toString()
+        );
     }
 }

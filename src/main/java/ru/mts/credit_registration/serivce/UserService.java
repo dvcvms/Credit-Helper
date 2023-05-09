@@ -17,8 +17,6 @@ public interface UserService {
 
     UserEntity createUser(UserEntity userDto);
 
-    UserEntity updateUser(UserEntity userDto);
-
     void deleteUser(Long id);
 
     boolean existsById(Long id);

@@ -19,7 +19,8 @@ public class UserValidator {
 
     private void checkEmail(String email) {
         if (userService.existsByEmail(email)) {
-            throw new UserNotValidException("USERNAME_IS_ALREADY_IN_USE",
+            throw new UserNotValidException(
+                    "USERNAME_IS_ALREADY_IN_USE",
                     String.format("Пользователь с почтой `%s` уже существует", email)
             );
         }
@@ -27,7 +28,8 @@ public class UserValidator {
 
     private void checkUsername(String username) {
         if (userService.existsByUsername(username)) {
-            throw new UserNotValidException("EMAIL_IS_ALREADY_IN_USE",
+            throw new UserNotValidException(
+                    "EMAIL_IS_ALREADY_IN_USE",
                     String.format("Пользователь с ником `%s` уже существует", username)
             );
         }

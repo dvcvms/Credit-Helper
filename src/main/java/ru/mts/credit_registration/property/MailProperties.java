@@ -3,23 +3,21 @@ package ru.mts.credit_registration.property;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Data
 @Configuration
-@PropertySource("classpath:config/mail.properties")
 public class MailProperties {
 
-    @Value("${port}")
+    @Value("${spring.email.port}")
     private int port;
 
-    @Value("${host}")
+    @Value("${spring.email.host}")
     private String host;
 
-    @Value("${login}")
+    @Value("${spring.email.login}")
     private String login;
 
-    @Value("${password}")
+    @Value("${spring.email.password}")
     private String password;
 
 }

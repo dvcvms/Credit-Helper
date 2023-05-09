@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_token
+      id: create_table_token
       author: maxvol
       changes:
         - createTable:
@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     primaryKey: true
-                    primaryKeyName: confirmation_token_pk
+                    primaryKeyName: pk_confirmation_token
                     nullable: false
               - column:
                   name: token
@@ -30,7 +30,10 @@ databaseChangeLog:
               - column:
                   name: user_id
                   type: integer
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_user
-                    references: users(id)
+        - addForeignKeyConstraint:
+            baseTableName: confirmation_token
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_users
+            onDelete: CASCADE

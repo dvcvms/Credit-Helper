@@ -23,13 +23,22 @@ public class TariffRepositoryImpl implements TariffRepository {
 
     @Override
     public Optional<List<TariffEntity>> findAll() {
-        return Optional.of(jdbcTemplate.query(SQL_SELECT_ALL, new BeanPropertyRowMapper<>(TariffEntity.class)));
+        return Optional.of(jdbcTemplate.query(
+                        SQL_SELECT_ALL,
+                        new BeanPropertyRowMapper<>(TariffEntity.class)
+                )
+        );
     }
 
     @Override
     public Optional<Boolean> existsById(Long tariffId) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_EXISTS_BY_ID, Boolean.class, tariffId));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+                            SQL_EXISTS_BY_ID,
+                            Boolean.class,
+                            tariffId
+                    )
+            );
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

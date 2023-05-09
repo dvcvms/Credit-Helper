@@ -7,13 +7,13 @@ databaseChangeLog:
       file: changeSet/loanOrder.yml
   - include:
       relativeToChangelogFile: true
-      file: changeSet/user.yml
+      file: changeSet/users.yml
   - include:
       relativeToChangelogFile: true
-      file: changeSet/role.yml
+      file: changeSet/roles.yml
   - include:
       relativeToChangelogFile: true
-      file: changeSet/user-role.yml
+      file: changeSet/users-roles.yml
   - include:
       relativeToChangelogFile: true
       file: changeSet/confirmationToken.yml

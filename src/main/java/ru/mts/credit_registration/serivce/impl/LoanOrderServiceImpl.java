@@ -35,10 +35,14 @@ public class LoanOrderServiceImpl implements LoanOrderService {
                 LoanOrderStatus status = order.getStatus();
 
                 switch (status) {
-                    case IN_PROGRESS ->
-                            throw new CustomException("LOAN_CONSIDERATION", "Заявка на кредит находится на рассмотрении");
-                    case APPROVED ->
-                            throw new CustomException("LOAN_ALREADY_APPROVED", "Заявка на кредит уже утверждена");
+                    case IN_PROGRESS -> throw new CustomException(
+                            "LOAN_CONSIDERATION",
+                            "Заявка на кредит находится на рассмотрении"
+                    );
+                    case APPROVED -> throw new CustomException(
+                            "LOAN_ALREADY_APPROVED",
+                            "Заявка на кредит уже утверждена"
+                    );
                     case REFUSED -> {
                         Timestamp now = new Timestamp(System.currentTimeMillis());
                         Timestamp prev = order.getTimeUpdate();
@@ -59,13 +63,22 @@ public class LoanOrderServiceImpl implements LoanOrderService {
                 .setStatus(LoanOrderStatus.IN_PROGRESS)
                 .setTimeInsert(new Timestamp(System.currentTimeMillis()));
 
-        return new DataResponse<>(new DataLoanOrderResponse(orderRepository.save(newOrder)));
+        return new DataResponse<>(
+                new DataLoanOrderResponse(
+                        orderRepository.save(newOrder).getOrderId()
+                )
+        );
     }
 
     public DataResponse<DataStatusResponse> getStatusByOrderId(String orderId) {
         return new DataResponse<>(
                 new DataStatusResponse(
-                        orderRepository.findStatusByOrderId(orderId).orElseThrow(() -> new RuntimeException("ORDER_NOT_FOUND"))
+                        orderRepository.findStatusByOrderId(orderId)
+                                .orElseThrow(() -> new CustomException(
+                                                "ORDER_NOT_FOUND",
+                                                "Заявка не найдена"
+                                        )
+                                )
                 )
         );
     }
@@ -73,22 +86,22 @@ public class LoanOrderServiceImpl implements LoanOrderService {
     public void deleteOrder(DeleteApplicationRequest request) {
         LoanOrderEntity order =
                 orderRepository.findByUserIdAndOrderId(request.getUserId(), request.getOrderId())
-                        .orElseThrow(() -> new RuntimeException("ORDER_NOT_FOUND"));
+                        .orElseThrow(() -> new CustomException("ORDER_NOT_FOUND", "Заявка не найдена"));
 
         if (!(order.getStatus() == LoanOrderStatus.IN_PROGRESS)) {
-            throw new RuntimeException("ORDER_IMPOSSIBLE_TO_DELETE");
+            throw new CustomException("ORDER_IMPOSSIBLE_TO_DELETE", "Невозможно удалить заявку");
         }
 
         orderRepository.deleteByUserIdAndOrderId(request.getUserId(), request.getOrderId());
     }
 
     @Override
-    public List<LoanOrderEntity> getByStatus(String status) {
+    public List<LoanOrderEntity> getByStatus(LoanOrderStatus status) {
         return orderRepository.findByStatus(status).orElseThrow();
     }
 
     @Override
-    public void setStatusByOrderId(String orderId, String status) {
+    public void setStatusByOrderId(String orderId, LoanOrderStatus status) {
         orderRepository.updateStatusByOrderId(orderId, status);
     }
 

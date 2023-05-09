@@ -24,7 +24,7 @@ public class JwtService {
     private final String SECRET_KEY;
 
     @Autowired
-    public JwtService(@Value("${secret.key}") String key) {
+    public JwtService(@Value("${spring.security.secret.key}") String key) {
         this.SECRET_KEY = key;
     }
 

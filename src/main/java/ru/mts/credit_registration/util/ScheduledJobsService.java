@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mts.credit_registration.entity.LoanOrderEntity;
+import ru.mts.credit_registration.enums.LoanOrderStatus;
 import ru.mts.credit_registration.serivce.LoanOrderService;
 
 import java.sql.Timestamp;
@@ -29,10 +30,12 @@ public class ScheduledJobsService {
     )
     @Transactional
     public void considerationApplicationJob() {
-        List<LoanOrderEntity> inProgress = orderService.getByStatus("IN_PROGRESS");
+        List<LoanOrderEntity> inProgress = orderService.getByStatus(LoanOrderStatus.IN_PROGRESS);
 
         for (LoanOrderEntity order : inProgress) {
-            String currentStatus = nextBoolean() ? "APPROVED" : "REFUSED";
+            LoanOrderStatus currentStatus = nextBoolean()
+                    ? LoanOrderStatus.APPROVED
+                    : LoanOrderStatus.REFUSED;
 
             orderService.setStatusByOrderId(order.getOrderId(), currentStatus);
             orderService.setTimeUpdateByOrderId(order.getOrderId(), new Timestamp(System.currentTimeMillis()));

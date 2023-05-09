@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: DEV-2
-      author: devmarkru2
+      id: create_table_order
+      author: maxvol
       changes:
         - createTable:
             tableName: loan_order
@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     primaryKey: true
-                    primaryKeyName: tariff_pk
+                    primaryKeyName: pk_tariff
                     nullable: false
               - column:
                   name: order_id
@@ -29,10 +29,6 @@ databaseChangeLog:
               - column:
                   name: tariff_id
                   type: integer
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_loan_order
-                    references: tariff(id)
               - column:
                   name: credit_rating
                   type: double
@@ -51,3 +47,10 @@ databaseChangeLog:
               - column:
                   name: time_update
                   type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: loan_order
+            baseColumnNames: tariff_id
+            referencedTableName: tariff
+            referencedColumnNames: id
+            constraintName: fk_loan_order_tariff
+            onDelete: CASCADE

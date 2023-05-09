@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: DEV-1
-      author: devmarkru1
+      id: create_table_tariff
+      author: maxvol
       changes:
         - createTable:
             tableName: tariff

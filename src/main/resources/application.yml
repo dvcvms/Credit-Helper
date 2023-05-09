@@ -9,9 +9,27 @@ spring:
       ddl-auto: update
 
   liquibase:
+    enabled: true
     change-log: classpath:liquibase/changelog.yml
 
   scheduler:
     initDelay: 120000
     fixedRate: 120000
     poolSize: 5
+
+  security:
+    secret:
+      key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+  email:
+    port: 587
+    host: smtp.gmail.com
+    login: radagastbrown88@gmail.com
+    password: nkttqoskdfudlsab
+
+  server:
+    host: localhost
+    port: 8080
+
+  cors:
+    from: http://localhost:1234
