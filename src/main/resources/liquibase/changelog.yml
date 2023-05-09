@@ -1,12 +1,6 @@
 databaseChangeLog:
   - include:
       relativeToChangelogFile: true
-      file: changeSet/tariff.yml
-  - include:
-      relativeToChangelogFile: true
-      file: changeSet/loanOrder.yml
-  - include:
-      relativeToChangelogFile: true
       file: changeSet/users.yml
   - include:
       relativeToChangelogFile: true
@@ -17,3 +11,9 @@ databaseChangeLog:
   - include:
       relativeToChangelogFile: true
       file: changeSet/confirmationToken.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/tariff.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changeSet/loanOrder.yml

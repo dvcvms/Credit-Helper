@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.mts.credit_registration.entity.LoanOrderEntity;
 import ru.mts.credit_registration.enums.LoanOrderStatus;
 import ru.mts.credit_registration.exception.CustomException;
+import ru.mts.credit_registration.exception.UserNotFoundException;
 import ru.mts.credit_registration.model.*;
 import ru.mts.credit_registration.repository.LoanOrderRepository;
 import ru.mts.credit_registration.serivce.LoanOrderService;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoanOrderServiceImpl implements LoanOrderService {
 
+    private final UserServiceImpl userService;
     private final TariffServiceImpl tariffService;
     private final LoanOrderRepository orderRepository;
 
@@ -27,6 +29,10 @@ public class LoanOrderServiceImpl implements LoanOrderService {
 
         if (!tariffService.existsById(request.getTariffId())) {
             throw new CustomException("TARIFF_NOT_FOUND", "Тариф не найден");
+        }
+
+        if (!userService.existsById(request.getUserId())) {
+            throw new UserNotFoundException("USER_NOT_FOUND", "Пользователь не найден");
         }
 
         List<LoanOrderEntity> orders =
