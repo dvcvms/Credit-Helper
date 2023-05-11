@@ -124,10 +124,10 @@ spring:
 
 ```
   email:
-    port: 587
-    host: smtp.gmail.com
-    login: radagastbrown88@gmail.com
-    password: nkttqoskdfudlsab
+    port: 465
+    host: smtp.mail.ru
+    login: dvcvms@mail.ru
+    password: 9ByVGnbbc0LqRVEwj3bf
 ```
 
 ## FAQ
