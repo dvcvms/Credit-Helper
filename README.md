@@ -54,13 +54,13 @@ your experience with us as secure and convenient as possible.
 ### Clone the repository:
 
 ```
-  git clone https://gitlab.com/dvcvms/credit-registration.git
+  git clone https://github.com/dvcvms/Credit-Helper.git
 ```
 
 ### Navigate to the project directory:
 
 ```
-  cd credit-registration
+  cd Credit-Helper
 ```
 
 ### You need to set your database settings in application.yml:
