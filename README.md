@@ -6,7 +6,7 @@ I'm a Java backend developer.
 
 Author - [Max Volkov](https://github.com/dvcvms)
 
-My telegram: [@dvcvms](https://t.me/dvcvms)  
+My telegram: [@mx_volkov](https://t.me/mx_volkov)  
 My email: dvcvms@gmail.com  
 My CV: [link](https://drive.google.com/drive/folders/1KBKpWRn6xVJ4qnieDHj1ZdPkLpuxLJQX?usp=share_link)
 
